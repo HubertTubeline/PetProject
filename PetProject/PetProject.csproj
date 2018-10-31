@@ -64,6 +64,7 @@
     <Compile Include="Activities\RaceActivity.cs" />
     <Compile Include="Presenters\FlappyPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\RacePresenter.cs" />
     <Compile Include="Presenters\ScoresPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -84,7 +85,7 @@
     <AndroidResource Include="Resources\layout\activity_race.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\content_main.axml">
+    <AndroidResource Include="Resources\layout\content_games.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />
@@ -154,13 +155,10 @@
     <AndroidAsset Include="Assets\race\common.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\race\index.html" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\race\stats.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\race\v4.final.html" />
+    <AndroidAsset Include="Assets\race\index.html" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\race\images\background.js" />

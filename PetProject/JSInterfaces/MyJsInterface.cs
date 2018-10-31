@@ -17,16 +17,14 @@ namespace PetProject.JSInterfaces
     public class MyJsInterface : Java.Lang.Object
     {
         private readonly Activity _context;
-        private TextView _scoreText, _scoreValue;
+        private TextView _scoreValue;
 
-        public delegate void GameEndedContainer();
-
-        public event GameEndedContainer OnGameEnded;
+        public event EventHandler OnGameEnded;
 
         public MyJsInterface(Activity context)
         {
-            this._context = context;
-            _scoreText = context.FindViewById<TextView>(Resource.Id.scoreText);
+            _context = context;
+            //_scoreText = context.FindViewById<TextView>(Resource.Id.scoreText);
             _scoreValue = context.FindViewById<TextView>(Resource.Id.scoreValue);
         }
 
@@ -37,25 +35,25 @@ namespace PetProject.JSInterfaces
             Toast.MakeText(_context, message, ToastLength.Short).Show();
         }
 
-        [Export]
-        [JavascriptInterface]
-        public void SendSpeed(string speed)
-        {
-            try
-            {
-                _context.RunOnUiThread(() =>
-                {
-                    _scoreText.Text = "Speed: ";
-                    _scoreValue.Text = speed;
-                });   
+        //[Export]
+        //[JavascriptInterface]
+        //public void SendSpeed(string speed)
+        //{
+        //    try
+        //    {
+        //        _context.RunOnUiThread(() =>
+        //        {
+        //            _scoreText.Text = "Speed: ";
+        //            _scoreValue.Text = speed;
+        //        });   
                 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //    }
             
-        }
+        //}
 
         [Export]
         [JavascriptInterface]
@@ -65,7 +63,6 @@ namespace PetProject.JSInterfaces
             {
                 _context.RunOnUiThread(() =>
                 {
-                    _scoreText.Text = "Score: ";
                     _scoreValue.Text = score;
                 });
             }
@@ -81,7 +78,7 @@ namespace PetProject.JSInterfaces
         {
             try
             {
-                OnGameEnded?.Invoke();
+                OnGameEnded?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception e)
             {

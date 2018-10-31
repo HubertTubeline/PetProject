@@ -15,6 +15,9 @@ namespace PetProject.DAL.Entities
         public string UserName { get; set; }
 
         [MaxLength(64)]
-        public int MaxScore { get; set; }
+        public int RaceMaxScore { get; set; }
+
+        [MaxLength(64)]
+        public int FlappyMaxScore { get; set; }
     }
 }

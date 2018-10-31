@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using PetProject.Activities;
+using PetProject.Common.Helpers;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Services;
 using PetProject.JSInterfaces;
@@ -61,12 +62,15 @@ namespace PetProject.Presenters
             _webView.EvaluateJavascript("accelerate(0.08);", null);
         }
 
-        public void OnEndGame()
+        private void OnEndGame(object sender, EventArgs args)
         {
             var score = _activity.FindViewById<TextView>(Resource.Id.scoreValue);
-            _scoresService.SaveScore(_userName, int.Parse(score.Text));
+            _scoresService.SaveScore(_userName, int.Parse(score.Text), GameType.Flappy);
             _interface.OnGameEnded -= OnEndGame;
             Intent scores = new Intent(_activity, typeof(ScoresActivity));
+            scores.PutExtra("gameType", "Flappy");
+            scores.PutExtra("score", int.Parse(score.Text));
+            _activity.StartActivity(scores);
         }
     }
 }

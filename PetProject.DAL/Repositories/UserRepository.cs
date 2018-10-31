@@ -43,14 +43,14 @@ namespace PetProject.DAL.Repositories
                 var user = Get(item.UserName);
                 if (user == null)
                     return _db.Insert(item) == 1;
-
-                return Update(item);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return false;
             }
+
+            return false;
         }
 
         public bool Update(User item)
@@ -58,7 +58,8 @@ namespace PetProject.DAL.Repositories
             try
             {
                 var user = Get(item.UserName);
-                user.MaxScore = item.MaxScore;
+                user.RaceMaxScore = item.RaceMaxScore;
+                user.FlappyMaxScore = item.FlappyMaxScore;
                 _db.Update(user);
             }
             catch (Exception e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using PetProject.Common.Helpers;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
 using PetProject.DAL.Entities;
@@ -19,31 +20,17 @@ namespace PetProject.Common.Services
         public UserModel Get(string userName)
         {
             var user = _repository.Get(userName);
-            return new UserModel
-            {
-                UserName = user.UserName,
-                MaxScore = user.MaxScore
-            };
+            return Mapper.MapUser(user);
         }
 
         public bool Create(UserModel model)
         {
-            var user = new User()
-            {
-                UserName = model.UserName,
-                MaxScore = model.MaxScore
-            };
-            return _repository.Create(user);
+            return _repository.Create(Mapper.MapUser(model));
         }
 
         public bool Update(UserModel model)
         {
-            var user = new User()
-            {
-                UserName = model.UserName,
-                MaxScore = model.MaxScore
-            };
-            return _repository.Update(user);
+            return _repository.Update(Mapper.MapUser(model));
         }
 
         public bool Delete(string userName)

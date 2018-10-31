@@ -4,7 +4,8 @@
 	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:gravity="center">
+	android:gravity="center"
+	android:padding="20dp">
 	<TextView
 		android:text="Enter your username:"
 		android:layout_width="match_parent"
@@ -16,6 +17,24 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/userName" />
+	<RadioGroup
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/main_radio_group">
+		<RadioButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:checked="true"
+			android:text="Race game"
+			android:id="@+id/main_radio_race" />
+		<RadioButton
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Flappy game"
+			android:id="@+id/main_radio_flappy" />
+	</RadioGroup>
 	<Button
 		android:text="Confirm"
 		android:layout_width="match_parent"

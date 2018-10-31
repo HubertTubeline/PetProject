@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using PetProject.Activities;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
 using PetProject.Common.Services;
@@ -32,17 +33,20 @@ namespace PetProject.Presenters
         private void OnConfirm(object sender, EventArgs eventArgs)
         {
             var userName = _view.FindViewById<EditText>(Resource.Id.userName);
-            if (string.IsNullOrWhiteSpace(userName.Text)) return;
-            var user = new UserModel() { UserName = userName.Text};
-            var isCreated = _service.Create(user);
-            if (!isCreated)
-                Snackbar.Make(_view.Window.CurrentFocus, "Error while creating user", Snackbar.LengthShort).Show();
-            else
-            {
-                Intent intent = new Intent(_view, typeof(FlappyActivity));
-                intent.PutExtra("userName", userName.Text);
-                _view.StartActivity(intent);
-            }
+            var radioGroup = _view.FindViewById<RadioGroup>(Resource.Id.main_radio_group);
+
+            if (string.IsNullOrWhiteSpace(userName.Text) || radioGroup.CheckedRadioButtonId == -1) return;
+
+            var user = new UserModel() { UserName = userName.Text };
+            _service.Create(user);
+
+            var intent = radioGroup.CheckedRadioButtonId == Resource.Id.main_radio_flappy
+                ? new Intent(_view, typeof(FlappyActivity))
+                : new Intent(_view, typeof(RaceActivity));
+
+            intent.PutExtra("userName", userName.Text);
+
+            _view.StartActivity(intent);
         }
     }
 }
