@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+  <item
+    android:id="@+id/action_newGame"
+    android:title="New game"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_moves"
+    android:title="Show moves"
+    app:showAsAction="never" />
+  <item
+    android:id="@+id/action_ai"
+    android:title="Enable AI"
+    app:showAsAction="never" />
+</menu>
