@@ -1,52 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Views;
 using Android.Widget;
 using PetProject.Activities;
-using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
-using PetProject.Common.Services;
 
 namespace PetProject.Presenters
 {
-    public class MainPresenter
+    public class MainPresenter : BasePresenter
     {
-        private Activity _view;
-        private IUserService _service;
-
-        public MainPresenter(Activity view)
+        public MainPresenter(Activity activity)
         {
-            _view = view;
-            var button = _view.FindViewById<Button>(Resource.Id.confirmButton);
+            Activity = activity;
+            var button = Activity.FindViewById<Button>(Resource.Id.confirmButton);
             button.Click += OnConfirm;
-            _service = new UserService();
         }
 
         private void OnConfirm(object sender, EventArgs eventArgs)
         {
-            var userName = _view.FindViewById<EditText>(Resource.Id.userName);
-            var radioGroup = _view.FindViewById<RadioGroup>(Resource.Id.main_radio_group);
+            var userName = Activity.FindViewById<EditText>(Resource.Id.userName);
+            if (string.IsNullOrWhiteSpace(userName.Text)) return;
 
-            if (string.IsNullOrWhiteSpace(userName.Text) || radioGroup.CheckedRadioButtonId == -1) return;
+            CreateUser(userName.Text);
+            StartGameActivity();
+        }
 
-            var user = new UserModel() { UserName = userName.Text };
-            _service.Create(user);
+        private void CreateUser(string name)
+        {
+            User = new UserModel {UserName = name};
+            UserService.Create(User);
+        }
+
+        private void StartGameActivity()
+        {
+            var radioGroup = Activity.FindViewById<RadioGroup>(Resource.Id.main_radio_group);
 
             var intent = radioGroup.CheckedRadioButtonId == Resource.Id.main_radio_flappy
-                ? new Intent(_view, typeof(FlappyActivity))
-                : new Intent(_view, typeof(RaceActivity));
+                ? new Intent(Activity, typeof(FlappyActivity))
+                : new Intent(Activity, typeof(RaceActivity));
 
-            intent.PutExtra("userName", userName.Text);
-
-            _view.StartActivity(intent);
+            Activity.StartActivity(intent);
         }
     }
 }

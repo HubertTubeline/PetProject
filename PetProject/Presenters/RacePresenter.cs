@@ -1,64 +1,90 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
-using Android.Util;
 using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using PetProject.Activities;
-using PetProject.Common.Helpers;
-using PetProject.Common.Interfaces;
-using PetProject.Common.Services;
 using PetProject.JSInterfaces;
 
 namespace PetProject.Presenters
 {
-    public class RacePresenter
+    public class RacePresenter : BasePresenter
     {
-        private readonly Activity _activity;
-        private readonly WebView _webView;
-        private string _userName;
-        private IScoresService _scoresService;
         private MyJsInterface _interface;
+        private WebView _webView;
 
-        public RacePresenter(Activity activity, string userName)
+        public RacePresenter(Activity activity)
         {
-            _activity = activity;
-            _scoresService = new ScoresService();
-            _userName = userName;
-            _webView = activity.FindViewById<WebView>(Resource.Id.web_view_main);
-            _webView.Settings.JavaScriptEnabled = true;
-            _interface = new MyJsInterface(activity);
-            _webView.AddJavascriptInterface(_interface, "CSharp");
-            _interface.OnGameEnded += OnEndGame;
+            Activity = activity;
 
+            InitJavaScriptInterface();
+            InitWebView();
+            InitControlButtons();
+        }
+
+        private void InitJavaScriptInterface()
+        {
+            _interface = new MyJsInterface(Activity);
+            _interface.OnGameEnded += OnEndGame;
+        }
+
+        private void InitWebView()
+        {
+            _webView = Activity.FindViewById<WebView>(Resource.Id.web_view_main);
+
+            _webView.Settings.JavaScriptEnabled = true;
             _webView.LoadUrl("file:///android_asset/race/index.html");
+
+            _webView.AddJavascriptInterface(_interface, "CSharp");
 
             _webView.SetWebViewClient(new WebViewClient());
             _webView.SetWebChromeClient(new WebChromeClient());
+        }
 
-            var leftFab = activity.FindViewById<FloatingActionButton>(Resource.Id.fab_left);
-            var rightFab = activity.FindViewById<FloatingActionButton>(Resource.Id.fab_right);
+        private void InitControlButtons()
+        {
+            var leftFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.fab_left);
+            var rightFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.fab_right);
 
-            var upFab = activity.FindViewById<FloatingActionButton>(Resource.Id.fab_up);
-            var downFab = activity.FindViewById<FloatingActionButton>(Resource.Id.fab_down);
+            var upFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.fab_up);
+            var downFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.fab_down);
 
             leftFab.Touch += LeftFab_Touch;
             rightFab.Touch += RightFab_Touch;
+
             upFab.Touch += UpFab_Touch;
             downFab.Touch += DownFab_Touch;
         }
 
+        private void OnEndGame(object sender, EventArgs args)
+        {
+            _interface.OnGameEnded -= OnEndGame;
+            SaveScores();
+            StartScoresActivity();
+        }
+
+        private void SaveScores()
+        {
+            var scoreView = Activity.FindViewById<TextView>(Resource.Id.scoreValue);
+            var score = int.Parse(scoreView.Text);
+
+            User.RaceMaxScore = score;
+            ScoresService.SaveScore(User);
+        }
+
+        private void StartScoresActivity()
+        {
+            var scores = new Intent(Activity, typeof(ScoresActivity));
+            scores.PutExtra("gameType", "Race");
+
+            Activity.StartActivity(scores);
+        }
+
+
         private void LeftFab_Touch(object sender, View.TouchEventArgs e)
         {
-            _webView.EvaluateJavascript("keyFaster = true;", null);
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
@@ -72,7 +98,6 @@ namespace PetProject.Presenters
 
         private void RightFab_Touch(object sender, View.TouchEventArgs e)
         {
-            _webView.EvaluateJavascript("keyFaster = false;", null);
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
@@ -86,7 +111,6 @@ namespace PetProject.Presenters
 
         private void UpFab_Touch(object sender, View.TouchEventArgs e)
         {
-            _webView.EvaluateJavascript("keyFaster = true;", null);
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
@@ -110,18 +134,5 @@ namespace PetProject.Presenters
                     break;
             }
         }
-
-
-        private void OnEndGame(object sender, EventArgs args)
-        {
-            var score = _activity.FindViewById<TextView>(Resource.Id.scoreValue);
-            _scoresService.SaveScore(_userName, int.Parse(score.Text), GameType.Race);
-            _interface.OnGameEnded -= OnEndGame;
-            Intent scores = new Intent(_activity, typeof(ScoresActivity));
-            scores.PutExtra("gameType", "Race");
-            scores.PutExtra("score", int.Parse(score.Text));
-            _activity.StartActivity(scores);
-        }
-
     }
 }

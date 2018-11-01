@@ -1,8 +1,6 @@
-﻿using System;
-using PetProject.Common.Helpers;
+﻿using PetProject.Common.Helpers;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
-using PetProject.DAL.Entities;
 using PetProject.DAL.Interfaces;
 using PetProject.DAL.Repositories;
 

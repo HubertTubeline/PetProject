@@ -1,52 +1,56 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Android.App;
 using Android.Widget;
 using PetProject.Activities;
 using PetProject.Common.Helpers;
-using PetProject.Common.Interfaces;
-using PetProject.Common.Services;
 
 namespace PetProject.Presenters
 {
-    public class ScoresPresenter
+    public class ScoresPresenter : BasePresenter
     {
-        private readonly Activity _activity;
-        private readonly IScoresService _scoresService;
-        private GameType _type;
-        public ScoresPresenter(Activity activity, int score, GameType type)
+        public ScoresPresenter(Activity activity, GameType type)
         {
-            _activity = activity;
-            _type = type;
+            Activity = activity;
 
-            _scoresService = new ScoresService();
-            GetScores();
-            GetPlayerScore(score);
+            InitScores(type);
             var button = activity.FindViewById<Button>(Resource.Id.scores_returnButton);
-            button.Click += (sender, args) => { _activity.StartActivity(typeof(MainActivity)); };
+            button.Click += (sender, args) => { Activity.StartActivity(typeof(MainActivity)); };
         }
 
-        private void GetPlayerScore(int score)
+        private void InitPlayerScore(int score)
         {
-            var scoreTextView = _activity.FindViewById<TextView>(Resource.Id.scores_player_score);
+            var scoreTextView = Activity.FindViewById<TextView>(Resource.Id.scores_player_score);
             scoreTextView.Text = score.ToString();
         }
 
-        private void GetScores()
+        private void InitScores(GameType type)
         {
-            var text = "";
-            var scores = _scoresService.GetScores(_type);
+            var scores = ScoresService.GetScores(type);
 
+            var userScore = scores[User.UserName];
+            InitPlayerScore(userScore);
+
+            var scoresText = CreateScoreText(scores);
+
+            var scoresTextView = Activity.FindViewById<TextView>(Resource.Id.scores_scoresList);
+            scoresTextView.Text = scoresText;
+        }
+
+        private string CreateScoreText(Dictionary<string, int> scores)
+        {
             var sorted = scores.OrderByDescending(x => x.Value);
-            
+
+            var text = "";
             var counter = 1;
+
             foreach (var score in sorted)
             {
                 if (counter == 10) break;
                 text += counter++ + ". " + score.Key + ": " + score.Value + "\n";
             }
 
-            var scoresText = _activity.FindViewById<TextView>(Resource.Id.scores_scoresList);
-            scoresText.Text = text;
+            return text;
         }
     }
 }

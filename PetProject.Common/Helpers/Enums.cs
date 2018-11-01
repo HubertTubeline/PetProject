@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PetProject.Common.Helpers
+﻿namespace PetProject.Common.Helpers
 {
     public enum GameType
     {

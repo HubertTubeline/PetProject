@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using PetProject.Common.Helpers;
+using PetProject.Common.Models;
 
 namespace PetProject.Common.Interfaces
 {
@@ -10,6 +11,6 @@ namespace PetProject.Common.Interfaces
     {
         int GetScore(string userName, GameType type);
         Dictionary<string, int> GetScores(GameType type);
-        bool SaveScore(string userName, int score, GameType type);
+        bool SaveScore(UserModel user);
     }
 }

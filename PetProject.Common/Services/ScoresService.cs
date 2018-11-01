@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using PetProject.Common.Helpers;
 using PetProject.Common.Interfaces;
+using PetProject.Common.Models;
 using PetProject.DAL.Entities;
 using PetProject.DAL.Interfaces;
 using PetProject.DAL.Repositories;
@@ -12,7 +11,7 @@ namespace PetProject.Common.Services
 {
     public class ScoresService : IScoresService
     {
-        private IUserRepository _repository;
+        private readonly IUserRepository _repository;
 
         public ScoresService()
         {
@@ -28,7 +27,7 @@ namespace PetProject.Common.Services
             {
                 case GameType.Flappy:
                     return user.FlappyMaxScore;
-                    
+
                 case GameType.Race:
                     return user.RaceMaxScore;
                 default:
@@ -36,12 +35,12 @@ namespace PetProject.Common.Services
             }
         }
 
-        public Dictionary<string,int> GetScores(GameType type)
+        public Dictionary<string, int> GetScores(GameType type)
         {
             var users = _repository.Get();
-            var list = new Dictionary<string,int>();
+
+            var list = new Dictionary<string, int>();
             foreach (var user in users)
-            {
                 switch (type)
                 {
                     case GameType.Flappy:
@@ -50,36 +49,21 @@ namespace PetProject.Common.Services
                     case GameType.Race:
                         list.Add(user.UserName, user.RaceMaxScore);
                         break;
+                    default:
+                        return null;
                 }
-            }
-            
+
             return list;
         }
 
-        public bool SaveScore(string userName, int score, GameType type)
+        public bool SaveScore(UserModel model)
         {
             try
             {
-                var user = _repository.Get(userName);
-                switch (type)
-                {
-                    case GameType.Flappy:
-                        if (score > user.FlappyMaxScore)
-                        {
-                            user.FlappyMaxScore = score;
-                            _repository.Update(user);
-                        }
-                        break;
+                var user = _repository.Get(model.UserName);
 
-                    case GameType.Race:
-                        if (score > user.RaceMaxScore)
-                        {
-                            user.RaceMaxScore = score;
-                            _repository.Update(user);
-                        }
-
-                        break;
-                }
+                UpdateScores(model, user);
+                _repository.Update(user);
             }
             catch (Exception e)
             {
@@ -89,6 +73,14 @@ namespace PetProject.Common.Services
 
             return true;
         }
+
+        private void UpdateScores(UserModel model, User entity)
+        {
+            if (entity.FlappyMaxScore < model.FlappyMaxScore)
+                entity.FlappyMaxScore = model.FlappyMaxScore;
+
+            if (entity.RaceMaxScore < model.RaceMaxScore)
+                entity.RaceMaxScore = model.RaceMaxScore;
+        }
     }
 }
-

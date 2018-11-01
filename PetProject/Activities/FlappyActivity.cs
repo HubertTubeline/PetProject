@@ -11,11 +11,13 @@ namespace PetProject.Activities
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            var userName = Intent.GetStringExtra("userName");
             base.OnCreate(savedInstanceState);
+
             RequestedOrientation = ScreenOrientation.Landscape;
+
             SetContentView(Resource.Layout.activity_flappy);
-            var presenter = new FlappyPresenter(this, userName);
+
+            var presenter = new FlappyPresenter(this);
         }
     }
 }

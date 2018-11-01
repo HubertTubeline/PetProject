@@ -1,56 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Webkit;
 using Android.Widget;
 using PetProject.Activities;
-using PetProject.Common.Helpers;
-using PetProject.Common.Interfaces;
-using PetProject.Common.Services;
 using PetProject.JSInterfaces;
 
 namespace PetProject.Presenters
 {
-    public class FlappyPresenter
+    public class FlappyPresenter : BasePresenter
     {
-        private Activity _activity;
-        private WebView _webView;
-        private string _userName;
-        private IScoresService _scoresService;
         private MyJsInterface _interface;
+        private WebView _webView;
 
-        public FlappyPresenter(Activity activity, string userName)
+        public FlappyPresenter(Activity activity)
         {
-            _activity = activity;
-            _userName = userName;
-            _scoresService = new ScoresService();
+            Activity = activity;
 
-            _interface = new MyJsInterface(_activity);
+            InitJavaScriptInterface();
+            InitWebView();
+            InitControlButtons();
+        }
+
+        private void InitJavaScriptInterface()
+        {
+            _interface = new MyJsInterface(Activity);
             _interface.OnGameEnded += OnEndGame;
+        }
 
-            _webView = _activity.FindViewById<WebView>(Resource.Id.web_view_main);
+        private void InitWebView()
+        {
+            _webView = Activity.FindViewById<WebView>(Resource.Id.web_view_main);
+
             _webView.Settings.JavaScriptEnabled = true;
-            _webView.AddJavascriptInterface(_interface, "CSharp");
-
             _webView.LoadUrl("file:///android_asset/flappy/index.html");
+
+            _webView.AddJavascriptInterface(_interface, "CSharp");
 
             _webView.SetWebViewClient(new WebViewClient());
             _webView.SetWebChromeClient(new WebChromeClient());
+        }
 
-            var upFab = _activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_up);
-            var downFab = _activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_down);
+        private void InitControlButtons()
+        {
+            var upFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_up);
+            var downFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_down);
 
             upFab.Touch += UpFab_Touch;
             downFab.Touch += DownFab_Touch;
         }
+
+        private void OnEndGame(object sender, EventArgs args)
+        {
+            _interface.OnGameEnded -= OnEndGame;
+
+            SaveScores();
+            StartScoresActivity();
+        }
+
+        private void SaveScores()
+        {
+            var scoreView = Activity.FindViewById<TextView>(Resource.Id.scoreValue);
+            var score = int.Parse(scoreView.Text);
+
+            User.FlappyMaxScore = score;
+            ScoresService.SaveScore(User);
+        }
+
+        private void StartScoresActivity()
+        {
+            var scores = new Intent(Activity, typeof(ScoresActivity));
+            scores.PutExtra("gameType", "Flappy");
+            Activity.StartActivity(scores);
+        }
+
 
         private void UpFab_Touch(object sender, View.TouchEventArgs e)
         {
@@ -60,17 +85,6 @@ namespace PetProject.Presenters
         private void DownFab_Touch(object sender, View.TouchEventArgs e)
         {
             _webView.EvaluateJavascript("accelerate(0.08);", null);
-        }
-
-        private void OnEndGame(object sender, EventArgs args)
-        {
-            var score = _activity.FindViewById<TextView>(Resource.Id.scoreValue);
-            _scoresService.SaveScore(_userName, int.Parse(score.Text), GameType.Flappy);
-            _interface.OnGameEnded -= OnEndGame;
-            Intent scores = new Intent(_activity, typeof(ScoresActivity));
-            scores.PutExtra("gameType", "Flappy");
-            scores.PutExtra("score", int.Parse(score.Text));
-            _activity.StartActivity(scores);
         }
     }
 }

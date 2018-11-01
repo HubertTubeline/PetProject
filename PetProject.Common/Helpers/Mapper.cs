@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PetProject.Common.Models;
+﻿using PetProject.Common.Models;
 using PetProject.DAL.Entities;
 
 namespace PetProject.Common.Helpers
@@ -10,7 +7,7 @@ namespace PetProject.Common.Helpers
     {
         public static User MapUser(UserModel model)
         {
-            return new User()
+            return new User
             {
                 UserName = model.UserName,
                 FlappyMaxScore = model.FlappyMaxScore,
@@ -20,7 +17,7 @@ namespace PetProject.Common.Helpers
 
         public static UserModel MapUser(User model)
         {
-            return new UserModel()
+            return new UserModel
             {
                 UserName = model.UserName,
                 RaceMaxScore = model.RaceMaxScore,

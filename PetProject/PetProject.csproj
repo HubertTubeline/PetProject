@@ -62,6 +62,7 @@
     <Compile Include="Activities\ScoresActivity.cs" />
     <Compile Include="JSInterfaces\MyJsInterface.cs" />
     <Compile Include="Activities\RaceActivity.cs" />
+    <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\FlappyPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\RacePresenter.cs" />
@@ -73,9 +74,6 @@
     <AndroidAsset Include="Assets\race\LICENSE" />
     <AndroidAsset Include="Assets\race\Rakefile" />
     <AndroidAsset Include="Assets\race\README.md" />
-    <AndroidAsset Include="Assets\race\.vs\ProjectSettings.json" />
-    <AndroidAsset Include="Assets\race\.vs\slnx.sqlite" />
-    <AndroidAsset Include="Assets\race\.vs\config\applicationhost.config" />
     <AndroidAsset Include="Assets\race\music\racer.ogg" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -292,9 +290,7 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\race\music\racer.mp3" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\race\.vs\javascript-racer-master\v15\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-mdpi\ic_keyboard_arrow_left_white_24dp.png" />
   </ItemGroup>
