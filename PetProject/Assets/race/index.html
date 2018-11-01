@@ -11,9 +11,7 @@
 
 <div id="racer">
         <canvas id="canvas">
-            Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
         </canvas>
-        Loading...
     </div>
     <audio id='music'>
         <source src="music/racer.ogg">
@@ -117,11 +115,7 @@
                     spriteW = sprite.source.w * SPRITES.SCALE;
                     if (Util.overlap(playerX, playerW, sprite.offset + spriteW / 2 * (sprite.offset > 0 ? 1 : -1), spriteW)) {
                         CSharp.EndGame();
-                        break;
-                        // TODO: Delet
-                        speed = maxSpeed / 5;
-                        position = Util.increase(playerSegment.p1.world.z, -playerZ, trackLength); // stop in front of sprite (at front of segment)
-                        break;
+                        return;
                     }
                 }
             }
@@ -132,10 +126,7 @@
                 if (speed > car.speed) {
                     if (Util.overlap(playerX, playerW, car.offset, carW, 0.8)) {
                         CSharp.EndGame();
-                        break;
-                        speed = car.speed * (car.speed / speed);
-                        position = Util.increase(car.z, -playerZ, trackLength);
-                        break;
+                        return;
                     }
                 }
             }
@@ -167,7 +158,7 @@
                 }
             }
 
-            CSharp.SendScore(score += ((5 * Math.round(speed / 500))) / 2);
+            CSharp.SendScore(score += ((5 * Math.round(speed / 2000))));
         }
 
         //-------------------------------------------------------------------------

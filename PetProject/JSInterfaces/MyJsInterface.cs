@@ -35,26 +35,6 @@ namespace PetProject.JSInterfaces
             Toast.MakeText(_context, message, ToastLength.Short).Show();
         }
 
-        //[Export]
-        //[JavascriptInterface]
-        //public void SendSpeed(string speed)
-        //{
-        //    try
-        //    {
-        //        _context.RunOnUiThread(() =>
-        //        {
-        //            _scoreText.Text = "Speed: ";
-        //            _scoreValue.Text = speed;
-        //        });   
-                
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-            
-        //}
-
         [Export]
         [JavascriptInterface]
         public void SendScore(string score)

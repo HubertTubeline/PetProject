@@ -14,22 +14,35 @@ namespace PetProject.Presenters
             Activity = activity;
 
             InitScores(type);
+            InitPlayerScore(type);
             var button = activity.FindViewById<Button>(Resource.Id.scores_returnButton);
             button.Click += (sender, args) => { Activity.StartActivity(typeof(MainActivity)); };
         }
 
-        private void InitPlayerScore(int score)
+        private void InitPlayerScore(GameType type)
         {
             var scoreTextView = Activity.FindViewById<TextView>(Resource.Id.scores_player_score);
-            scoreTextView.Text = score.ToString();
+
+            switch (type)
+            {
+                case GameType.Flappy:
+                    scoreTextView.Text = User.FlappyMaxScore.ToString();
+                    break;
+
+                case GameType.Race:
+                    scoreTextView.Text = User.RaceMaxScore.ToString();
+                    break;
+
+                default:
+                    scoreTextView.Text = "0";
+                    break;
+            }
+            
         }
 
         private void InitScores(GameType type)
         {
             var scores = ScoresService.GetScores(type);
-
-            var userScore = scores[User.UserName];
-            InitPlayerScore(userScore);
 
             var scoresText = CreateScoreText(scores);
 

@@ -22,25 +22,11 @@
 	</android.support.design.widget.AppBarLayout>
 	<include
 		layout="@layout/content_games" />
-	<LinearLayout
-		android:orientation="vertical"
-		android:minWidth="25px"
-		android:minHeight="25px"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|end"
-		android:id="@+id/linearLayout1">
 				<android.support.design.widget.FloatingActionButton
 			android:id="@+id/flappy_fab_up"
 			android:src="@drawable/ic_keyboard_arrow_up_white_24dp"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/fab_margin"/>
-		<android.support.design.widget.FloatingActionButton
-			android:id="@+id/flappy_fab_down"
-			android:src="@drawable/ic_keyboard_arrow_down_white_24dp"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-		android:layout_margin="@dimen/fab_margin"/>
-	</LinearLayout>
+			android:layout_margin="@dimen/fab_margin"
+			android:layout_gravity="bottom|end"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -46,10 +46,7 @@ namespace PetProject.Presenters
         private void InitControlButtons()
         {
             var upFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_up);
-            var downFab = Activity.FindViewById<FloatingActionButton>(Resource.Id.flappy_fab_down);
-
             upFab.Touch += UpFab_Touch;
-            downFab.Touch += DownFab_Touch;
         }
 
         private void OnEndGame(object sender, EventArgs args)
@@ -79,12 +76,15 @@ namespace PetProject.Presenters
 
         private void UpFab_Touch(object sender, View.TouchEventArgs e)
         {
-            _webView.EvaluateJavascript("accelerate(-0.08);", null);
-        }
-
-        private void DownFab_Touch(object sender, View.TouchEventArgs e)
-        {
-            _webView.EvaluateJavascript("accelerate(0.08);", null);
+            switch (e.Event.Action)
+            {
+                case MotionEventActions.Down:
+                    _webView.EvaluateJavascript("accelerate(-0.08);", null);
+                    break;
+                case MotionEventActions.Up:
+                    _webView.EvaluateJavascript("accelerate(0.08);", null);
+                    break;
+            }
         }
     }
 }
