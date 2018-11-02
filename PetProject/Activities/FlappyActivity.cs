@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Support.V7.App;
 using PetProject.Presenters;
+using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 namespace PetProject.Activities
 {
@@ -18,6 +19,16 @@ namespace PetProject.Activities
             SetContentView(Resource.Layout.activity_flappy);
 
             var presenter = new FlappyPresenter(this);
+        }
+
+        public override void OnBackPressed()
+        {
+            var dialog = new AlertDialog.Builder(this);
+            dialog.SetMessage("Are you sure?");
+            dialog.SetCancelable(true);
+            dialog.SetPositiveButton("YES", (sender, args) => { Finish(); });
+            dialog.SetNegativeButton("NO", (sender, args) => { });
+            dialog.Create().Show();
         }
     }
 }

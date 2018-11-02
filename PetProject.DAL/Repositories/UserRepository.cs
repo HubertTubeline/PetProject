@@ -89,7 +89,7 @@ namespace PetProject.DAL.Repositories
             _db.CreateTable<User>();
         }
 
-        public bool TruncateTable()
+        private bool TruncateTable()
         {
             try
             {

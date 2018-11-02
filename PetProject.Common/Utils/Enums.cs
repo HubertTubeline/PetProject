@@ -1,4 +1,4 @@
-﻿namespace PetProject.Common.Helpers
+﻿namespace PetProject.Common.Utils
 {
     public enum GameType
     {

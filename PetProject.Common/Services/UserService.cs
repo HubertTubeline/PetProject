@@ -1,8 +1,8 @@
-﻿using PetProject.Common.Helpers;
+﻿using Ninject;
+using PetProject.Common.Utils;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
 using PetProject.DAL.Interfaces;
-using PetProject.DAL.Repositories;
 
 namespace PetProject.Common.Services
 {
@@ -10,9 +10,9 @@ namespace PetProject.Common.Services
     {
         private readonly IUserRepository _repository;
 
-        public UserService(string databaseName)
+        public UserService(string databaseName = "database")
         {
-            _repository = new UserRepository(databaseName);
+            _repository = NinjectRegistrator.GetKernel(databaseName).Get<IUserRepository>();
         }
 
         public UserModel Get(string userName)

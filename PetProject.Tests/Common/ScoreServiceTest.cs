@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PetProject.Common.Helpers;
+﻿using Ninject;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
-using PetProject.Common.Services;
+using PetProject.Common.Utils;
 using Xunit;
 
 namespace PetProject.Tests.Common
 {
     public class ScoreServiceTest
     {
-        private readonly IScoresService _scoresService = new ScoresService("test");
-        private readonly IUserService _userService = new UserService("test");
-        private const string UserName = "ScoreServiceTest"; 
+        private readonly IScoresService _scoresService;
+        private readonly IUserService _userService;
+        private const string UserName = "ScoreServiceTest";
+
+        public ScoreServiceTest()
+        {
+            var kernel = NinjectRegistrator.GetKernel("test");
+            _scoresService = kernel.Get<IScoresService>();
+            _userService = kernel.Get<IUserService>();
+        }
 
         [Fact]
         public void SendLargerFlappyScore()

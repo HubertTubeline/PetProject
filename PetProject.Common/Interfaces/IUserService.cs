@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PetProject.Common.Models;
+﻿using PetProject.Common.Models;
 
 namespace PetProject.Common.Interfaces
 {

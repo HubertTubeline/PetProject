@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ninject;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
-using PetProject.Common.Services;
+using PetProject.Common.Utils;
 using Xunit;
 
 namespace PetProject.Tests.Common
 {
     public class UserServiceTest
     {
-        private readonly IUserService _service = new UserService("test");
+        private readonly IUserService _service;
         private const string UserName = "UserServiceTest";
+
+        public UserServiceTest()
+        {
+            var kernel = NinjectRegistrator.GetKernel("test");
+            _service = kernel.Get<IUserService>();
+        }
 
         [Fact]
         public void CreateUserTest()

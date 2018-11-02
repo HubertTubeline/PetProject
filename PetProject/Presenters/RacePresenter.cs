@@ -17,6 +17,7 @@ namespace PetProject.Presenters
 
         public RacePresenter(Activity activity)
         {
+            
             Activity = activity;
 
             InitJavaScriptInterface();
@@ -62,7 +63,7 @@ namespace PetProject.Presenters
         {
             _interface.OnGameEnded -= OnEndGame;
             SaveScores();
-            StartScoresActivity();
+            GoToScoresActivity();
         }
 
         private void SaveScores()
@@ -74,12 +75,13 @@ namespace PetProject.Presenters
             ScoresService.SaveScore(User);
         }
 
-        private void StartScoresActivity()
+        private void GoToScoresActivity()
         {
             var scores = new Intent(Activity, typeof(ScoresActivity));
             scores.PutExtra("gameType", "Race");
 
             Activity.StartActivity(scores);
+            Activity.Finish();
         }
 
 

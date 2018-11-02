@@ -22,7 +22,7 @@ namespace PetProject.Presenters
             if (string.IsNullOrWhiteSpace(userName.Text)) return;
 
             CreateUser(userName.Text);
-            StartGameActivity();
+            GoToGameActivity();
         }
 
         private void CreateUser(string name)
@@ -31,7 +31,7 @@ namespace PetProject.Presenters
             UserService.Create(User);
         }
 
-        private void StartGameActivity()
+        private void GoToGameActivity()
         {
             var radioGroup = Activity.FindViewById<RadioGroup>(Resource.Id.main_radio_group);
 
@@ -40,6 +40,7 @@ namespace PetProject.Presenters
                 : new Intent(Activity, typeof(RaceActivity));
 
             Activity.StartActivity(intent);
+            Activity.Finish();
         }
     }
 }

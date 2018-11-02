@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using PetProject.Common.Helpers;
+﻿using System.Collections.Generic;
+using PetProject.Common.Utils;
 using PetProject.Common.Models;
 
 namespace PetProject.Common.Interfaces

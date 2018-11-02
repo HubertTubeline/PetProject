@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ninject;
+using PetProject.Common.Utils;
 using PetProject.DAL.Entities;
 using PetProject.DAL.Interfaces;
-using PetProject.DAL.Repositories;
 using Xunit;
 
 namespace PetProject.Tests.DAL
 {
     public class UserRepositoryTest
     {
-        private readonly IUserRepository _repo = new UserRepository("test");
+        private readonly IUserRepository _repository;
         private const string UserName = "UserRepoTest";
+
+        public UserRepositoryTest()
+        {
+            var kernel = NinjectRegistrator.GetKernel("test");
+            _repository = kernel.Get<IUserRepository>();
+        }
 
         [Fact]
         public void CreateUser()
@@ -25,8 +29,8 @@ namespace PetProject.Tests.DAL
             };
 
             // Act
-            _repo.Create(user);
-            var result = _repo.Get(UserName);
+            _repository.Create(user);
+            var result = _repository.Get(UserName);
 
             // Assert
             Assert.Equal(user.UserName, result.UserName);
@@ -44,15 +48,15 @@ namespace PetProject.Tests.DAL
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
-            _repo.Create(user);
+            _repository.Create(user);
 
             // Act
             user.RaceMaxScore = 2048;
             user.FlappyMaxScore = 122;
-            _repo.Update(user);
+            _repository.Update(user);
 
             // Assert
-            var result = _repo.Get(UserName);
+            var result = _repository.Get(UserName);
             Assert.Equal(2048, result.RaceMaxScore);
             Assert.Equal(122, result.FlappyMaxScore);
 
@@ -68,13 +72,13 @@ namespace PetProject.Tests.DAL
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
-            _repo.Create(user);
+            _repository.Create(user);
 
             // Act
-            _repo.Delete(UserName);
+            _repository.Delete(UserName);
 
             // Assert
-            var result = _repo.Get(UserName);
+            var result = _repository.Get(UserName);
             Assert.Null(result);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using PetProject.Common.Models;
 using PetProject.DAL.Entities;
 
-namespace PetProject.Common.Helpers
+namespace PetProject.Common.Utils
 {
     public static class Mapper
     {

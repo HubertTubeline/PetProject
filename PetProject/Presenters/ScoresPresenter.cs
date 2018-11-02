@@ -3,7 +3,7 @@ using System.Linq;
 using Android.App;
 using Android.Widget;
 using PetProject.Activities;
-using PetProject.Common.Helpers;
+using PetProject.Common.Utils;
 
 namespace PetProject.Presenters
 {
