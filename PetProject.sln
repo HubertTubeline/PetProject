@@ -10,7 +10,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject", "PetProject\Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.Common", "PetProject.Common\PetProject.Common.csproj", "{8DB7A153-7522-42E0-9592-0D804384DBDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.DAL", "PetProject.DAL\PetProject.DAL.csproj", "{C8788366-2750-4ADE-8C97-B3E8A280A68D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetProject.DAL", "PetProject.DAL\PetProject.DAL.csproj", "{C8788366-2750-4ADE-8C97-B3E8A280A68D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetProject.Tests", "PetProject.Tests\PetProject.Tests.csproj", "{01A45F57-E24B-4E79-B184-F55370D93F58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{C8788366-2750-4ADE-8C97-B3E8A280A68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8788366-2750-4ADE-8C97-B3E8A280A68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8788366-2750-4ADE-8C97-B3E8A280A68D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A45F57-E24B-4E79-B184-F55370D93F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A45F57-E24B-4E79-B184-F55370D93F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A45F57-E24B-4E79-B184-F55370D93F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A45F57-E24B-4E79-B184-F55370D93F58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

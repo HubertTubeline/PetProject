@@ -12,7 +12,7 @@ namespace PetProject.Presenters
 {
     public class RacePresenter : BasePresenter
     {
-        private MyJsInterface _interface;
+        private GameJsInterface _interface;
         private WebView _webView;
 
         public RacePresenter(Activity activity)
@@ -26,7 +26,7 @@ namespace PetProject.Presenters
 
         private void InitJavaScriptInterface()
         {
-            _interface = new MyJsInterface(Activity);
+            _interface = new GameJsInterface(Activity);
             _interface.OnGameEnded += OnEndGame;
         }
 

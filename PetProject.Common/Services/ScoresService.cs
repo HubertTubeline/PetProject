@@ -13,9 +13,9 @@ namespace PetProject.Common.Services
     {
         private readonly IUserRepository _repository;
 
-        public ScoresService()
+        public ScoresService(string databaseName)
         {
-            _repository = new UserRepository();
+            _repository = new UserRepository(databaseName);
         }
 
         public int GetScore(string userName, GameType type)

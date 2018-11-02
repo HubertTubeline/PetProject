@@ -7,6 +7,7 @@ namespace PetProject.Common.Helpers
     {
         public static User MapUser(UserModel model)
         {
+            if (model == null) return null;
             return new User
             {
                 UserName = model.UserName,
@@ -17,6 +18,7 @@ namespace PetProject.Common.Helpers
 
         public static UserModel MapUser(User model)
         {
+            if (model == null) return null;
             return new UserModel
             {
                 UserName = model.UserName,

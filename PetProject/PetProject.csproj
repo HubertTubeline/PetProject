@@ -60,7 +60,7 @@
     <Compile Include="Activities\FlappyActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ScoresActivity.cs" />
-    <Compile Include="JSInterfaces\MyJsInterface.cs" />
+    <Compile Include="JSInterfaces\GameJsInterface.cs" />
     <Compile Include="Activities\RaceActivity.cs" />
     <Compile Include="Presenters\BasePresenter.cs" />
     <Compile Include="Presenters\FlappyPresenter.cs" />

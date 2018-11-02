@@ -14,25 +14,17 @@ using Java.Interop;
 
 namespace PetProject.JSInterfaces
 {
-    public class MyJsInterface : Java.Lang.Object
+    public class GameJsInterface : Java.Lang.Object
     {
         private readonly Activity _context;
         private TextView _scoreValue;
 
         public event EventHandler OnGameEnded;
 
-        public MyJsInterface(Activity context)
+        public GameJsInterface(Activity context)
         {
             _context = context;
-            //_scoreText = context.FindViewById<TextView>(Resource.Id.scoreText);
             _scoreValue = context.FindViewById<TextView>(Resource.Id.scoreValue);
-        }
-
-        [Export]
-        [JavascriptInterface]
-        public void ShowToast(string message)
-        {
-            Toast.MakeText(_context, message, ToastLength.Short).Show();
         }
 
         [Export]

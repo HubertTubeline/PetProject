@@ -12,7 +12,7 @@ namespace PetProject.Presenters
 {
     public class FlappyPresenter : BasePresenter
     {
-        private MyJsInterface _interface;
+        private GameJsInterface _interface;
         private WebView _webView;
 
         public FlappyPresenter(Activity activity)
@@ -26,7 +26,7 @@ namespace PetProject.Presenters
 
         private void InitJavaScriptInterface()
         {
-            _interface = new MyJsInterface(Activity);
+            _interface = new GameJsInterface(Activity);
             _interface.OnGameEnded += OnEndGame;
         }
 
@@ -72,7 +72,6 @@ namespace PetProject.Presenters
             scores.PutExtra("gameType", "Flappy");
             Activity.StartActivity(scores);
         }
-
 
         private void UpFab_Touch(object sender, View.TouchEventArgs e)
         {

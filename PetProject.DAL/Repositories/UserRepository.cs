@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using PetProject.DAL.Entities;
 using PetProject.DAL.Interfaces;
 using SQLite;
@@ -11,15 +12,15 @@ namespace PetProject.DAL.Repositories
     {
         private readonly SQLiteConnection _db;
 
-        public UserRepository()
+        public UserRepository(string databaseName)
         {
             var dbPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Personal),
-                "database.db3");
+                databaseName + ".db3");
 
             _db = new SQLiteConnection(dbPath);
-
-            // InitTable();
+            if (databaseName == "test") TruncateTable();
+            InitTables();
         }
 
         public List<User> Get()
@@ -55,11 +56,9 @@ namespace PetProject.DAL.Repositories
             try
             {
                 var user = Get(item.UserName);
+                item.Id = user.Id;
 
-                user.RaceMaxScore = item.RaceMaxScore;
-                user.FlappyMaxScore = item.FlappyMaxScore;
-
-                _db.Update(user);
+                _db.Update(item);
             }
             catch (Exception e)
             {
@@ -85,9 +84,24 @@ namespace PetProject.DAL.Repositories
             return true;
         }
 
-        private void InitTable()
+        private void InitTables()
         {
             _db.CreateTable<User>();
+        }
+
+        public bool TruncateTable()
+        {
+            try
+            {
+                _db.DeleteAll<User>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            return true;
         }
     }
 }

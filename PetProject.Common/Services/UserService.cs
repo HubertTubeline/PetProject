@@ -10,9 +10,9 @@ namespace PetProject.Common.Services
     {
         private readonly IUserRepository _repository;
 
-        public UserService()
+        public UserService(string databaseName)
         {
-            _repository = new UserRepository();
+            _repository = new UserRepository(databaseName);
         }
 
         public UserModel Get(string userName)

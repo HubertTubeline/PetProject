@@ -8,8 +8,8 @@ namespace PetProject.DAL.Entities
     [Table("Users")]
     public class User
     {
-        [PrimaryKey, AutoIncrement, Column("id")]
-        public int UserId { get; set; }
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
 
         [MaxLength(128)]
         public string UserName { get; set; }
