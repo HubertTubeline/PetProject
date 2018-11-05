@@ -12,8 +12,4 @@
     <ProjectReference Include="..\PetProject.DAL\PetProject.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utils\NewFolder\" />
-  </ItemGroup>
-
 </Project>

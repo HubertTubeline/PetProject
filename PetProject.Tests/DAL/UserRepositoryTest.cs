@@ -9,8 +9,7 @@ namespace PetProject.Tests.DAL
     public class UserRepositoryTest
     {
         private readonly IUserRepository _repository;
-        private const string UserName = "UserRepoTest";
-
+        
         public UserRepositoryTest()
         {
             var kernel = NinjectRegistrator.GetKernel("test");
@@ -23,14 +22,14 @@ namespace PetProject.Tests.DAL
             // Arrange
             var user = new User
             {
-                UserName = UserName,
+                UserName = "CreateUserRepo",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
 
             // Act
             _repository.Create(user);
-            var result = _repository.Get(UserName);
+            var result = _repository.Get("CreateUserRepo");
 
             // Assert
             Assert.Equal(user.UserName, result.UserName);
@@ -44,7 +43,7 @@ namespace PetProject.Tests.DAL
             // Arrange
             var user = new User
             {
-                UserName = UserName,
+                UserName = "EditUserRepo",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
@@ -56,7 +55,7 @@ namespace PetProject.Tests.DAL
             _repository.Update(user);
 
             // Assert
-            var result = _repository.Get(UserName);
+            var result = _repository.Get("EditUserRepo");
             Assert.Equal(2048, result.RaceMaxScore);
             Assert.Equal(122, result.FlappyMaxScore);
 
@@ -68,18 +67,19 @@ namespace PetProject.Tests.DAL
             // Arrange
             var user = new User
             {
-                UserName = UserName,
+                UserName = "DeleteUserRepo",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
             _repository.Create(user);
 
             // Act
-            _repository.Delete(UserName);
+            var isDeleted = _repository.Delete("DeleteUserRepo");
 
             // Assert
-            var result = _repository.Get(UserName);
+            var result = _repository.Get("DeleteUserRepo");
             Assert.Null(result);
+            Assert.True(isDeleted);
         }
     }
 }

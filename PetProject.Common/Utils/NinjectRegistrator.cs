@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Ninject;
 using Ninject.Modules;
 using PetProject.Common.Interfaces;
@@ -10,18 +11,22 @@ namespace PetProject.Common.Utils
 {
     public static class NinjectRegistrator
     {
-        private static readonly Dictionary<string, StandardKernel> Kernels = new Dictionary<string, StandardKernel>();
+        private static readonly Dictionary<string, IKernel> Kernels = new Dictionary<string, IKernel>();
 
-        public static StandardKernel GetKernel(string databaseName = "database")
+        public static IKernel GetKernel(string databaseName = "database")
         {
             if (Kernels.ContainsKey(databaseName)) return Kernels[databaseName];
 
+            RegisterKernel(databaseName);
+            return Kernels[databaseName];
+        }
+
+        private static async void RegisterKernel(string databaseName)
+        {
             NinjectModule registrations = new ServiceModule(databaseName);
 
             var kernel = new StandardKernel(registrations);
             Kernels.Add(databaseName, kernel);
-
-            return kernel;
         }
     }
 

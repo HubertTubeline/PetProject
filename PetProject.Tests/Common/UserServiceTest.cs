@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using System;
+using Ninject;
 using PetProject.Common.Interfaces;
 using PetProject.Common.Models;
 using PetProject.Common.Utils;
@@ -9,8 +10,7 @@ namespace PetProject.Tests.Common
     public class UserServiceTest
     {
         private readonly IUserService _service;
-        private const string UserName = "UserServiceTest";
-
+        
         public UserServiceTest()
         {
             var kernel = NinjectRegistrator.GetKernel("test");
@@ -18,21 +18,22 @@ namespace PetProject.Tests.Common
         }
 
         [Fact]
-        public void CreateUserTest()
+        public void CreateUser()
         {
             // Arrange
             var user = new UserModel
             {
-                UserName = UserName,
+                UserName = "CreateUser",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
 
             // Act
             _service.Create(user);
-            var result = _service.Get(UserName);
+            var result = _service.Get("CreateUser");
 
             // Assert
+            Assert.NotNull(result);
             Assert.Equal(user.UserName, result.UserName);
             Assert.Equal(user.RaceMaxScore, result.RaceMaxScore);
             Assert.Equal(user.FlappyMaxScore, result.FlappyMaxScore);
@@ -45,7 +46,7 @@ namespace PetProject.Tests.Common
             // Arrange
             var user = new UserModel
             {
-                UserName = UserName,
+                UserName = "EditUser",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
@@ -57,7 +58,7 @@ namespace PetProject.Tests.Common
             _service.Update(user);
 
             // Assert
-            var result = _service.Get(UserName);
+            var result = _service.Get("EditUser");
             Assert.Equal(2048, result.RaceMaxScore);
             Assert.Equal(122, result.FlappyMaxScore);
 
@@ -69,17 +70,17 @@ namespace PetProject.Tests.Common
             // Arrange
             var user = new UserModel
             {
-                UserName = UserName,
+                UserName = "DeleteUser",
                 RaceMaxScore = 128,
                 FlappyMaxScore = 256
             };
             _service.Create(user);
 
             // Act
-            _service.Delete(UserName);
+            _service.Delete("DeleteUser");
 
             // Assert
-            var result = _service.Get(UserName);
+            var result = _service.Get("DeleteUser");
             Assert.Null(result);
         }
     }

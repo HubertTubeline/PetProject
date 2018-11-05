@@ -11,8 +11,8 @@ namespace PetProject.Presenters
         protected static readonly IUserService UserService;
         protected static readonly IScoresService ScoresService;
 
-        protected static UserModel User { get; set; }
-        protected Activity Activity { get; set; }
+        protected static UserModel User;
+        protected Activity Activity;
 
         static BasePresenter()
         {

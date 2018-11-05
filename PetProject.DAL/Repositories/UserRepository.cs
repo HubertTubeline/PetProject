@@ -19,7 +19,7 @@ namespace PetProject.DAL.Repositories
                 databaseName + ".db3");
 
             _db = new SQLiteConnection(dbPath);
-            if (databaseName == "test") TruncateTable();
+
             InitTables();
         }
 

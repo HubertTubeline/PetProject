@@ -10,8 +10,7 @@ namespace PetProject.Tests.Common
     {
         private readonly IScoresService _scoresService;
         private readonly IUserService _userService;
-        private const string UserName = "ScoreServiceTest";
-
+        
         public ScoreServiceTest()
         {
             var kernel = NinjectRegistrator.GetKernel("test");
@@ -28,7 +27,7 @@ namespace PetProject.Tests.Common
 
             var user = new UserModel()
             {
-                UserName = UserName,
+                UserName = "SendLargerFlappyScore",
                 RaceMaxScore = 128,
                 FlappyMaxScore = initialScore
             };
@@ -37,7 +36,7 @@ namespace PetProject.Tests.Common
             // Act
             user.FlappyMaxScore = modifiedScore;
             _scoresService.SaveScore(user);
-            var scores = _scoresService.GetScore(UserName, GameType.Flappy);
+            var scores = _scoresService.GetScore("SendLargerFlappyScore", GameType.Flappy);
 
             // Assert
             Assert.Equal(modifiedScore, scores);
@@ -52,7 +51,7 @@ namespace PetProject.Tests.Common
 
             var user = new UserModel()
             {
-                UserName = UserName,
+                UserName = "SendLargerRaceScore",
                 RaceMaxScore = initialScore,
                 FlappyMaxScore = 256
             };
@@ -61,9 +60,10 @@ namespace PetProject.Tests.Common
             // Act
             user.RaceMaxScore = modifiedScore;
             _scoresService.SaveScore(user);
-            var scores = _scoresService.GetScore(UserName, GameType.Race);
+            var scores = _scoresService.GetScore("SendLargerRaceScore", GameType.Race);
 
             // Assert
+            Assert.NotEqual(0,scores);
             Assert.Equal(modifiedScore, scores);
         }
 
@@ -76,7 +76,7 @@ namespace PetProject.Tests.Common
 
             var user = new UserModel()
             {
-                UserName = UserName,
+                UserName = "SendSmallerFlappyScore",
                 RaceMaxScore = 128,
                 FlappyMaxScore = initialScore
             };
@@ -85,7 +85,7 @@ namespace PetProject.Tests.Common
             // Act
             user.FlappyMaxScore = modifiedScore;
             _scoresService.SaveScore(user);
-            var scores = _scoresService.GetScore(UserName, GameType.Flappy);
+            var scores = _scoresService.GetScore("SendSmallerFlappyScore", GameType.Flappy);
 
             // Assert
             Assert.Equal(initialScore, scores);
@@ -100,7 +100,7 @@ namespace PetProject.Tests.Common
 
             var user = new UserModel()
             {
-                UserName = UserName,
+                UserName = "SendSmallerRaceScore",
                 RaceMaxScore = initialScore,
                 FlappyMaxScore = 256
             };
@@ -109,7 +109,7 @@ namespace PetProject.Tests.Common
             // Act
             user.RaceMaxScore = modifiedScore;
             _scoresService.SaveScore(user);
-            var scores = _scoresService.GetScore(UserName, GameType.Race);
+            var scores = _scoresService.GetScore("SendSmallerRaceScore", GameType.Race);
 
             // Assert
             Assert.Equal(initialScore, scores);
