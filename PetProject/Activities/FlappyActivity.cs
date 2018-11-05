@@ -26,7 +26,11 @@ namespace PetProject.Activities
             var dialog = new AlertDialog.Builder(this);
             dialog.SetMessage("Are you sure?");
             dialog.SetCancelable(true);
-            dialog.SetPositiveButton("YES", (sender, args) => { Finish(); });
+            dialog.SetPositiveButton("YES", (sender, args) =>
+            {
+                FinishAffinity();
+                StartActivity(typeof(MainActivity));
+            });
             dialog.SetNegativeButton("NO", (sender, args) => { });
             dialog.Create().Show();
         }

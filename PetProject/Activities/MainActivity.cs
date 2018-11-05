@@ -20,5 +20,10 @@ namespace PetProject.Activities
 
             var presenter = new MainPresenter(this);
         }
+
+        public override void OnBackPressed()
+        {
+            FinishAffinity();
+        }
     }
 }

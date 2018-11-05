@@ -25,5 +25,10 @@ namespace PetProject.Activities
 
             var presenter = new ScoresPresenter(this, gameType);
         }
+
+        public override void OnBackPressed()
+        {
+            StartActivity(typeof(MainActivity));
+        }
     }
 }

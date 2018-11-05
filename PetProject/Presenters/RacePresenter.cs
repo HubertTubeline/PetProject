@@ -80,8 +80,8 @@ namespace PetProject.Presenters
             var scores = new Intent(Activity, typeof(ScoresActivity));
             scores.PutExtra("gameType", "Race");
 
-            Activity.StartActivity(scores);
             Activity.Finish();
+            Activity.StartActivity(scores);
         }
 
 

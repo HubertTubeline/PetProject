@@ -70,8 +70,9 @@ namespace PetProject.Presenters
         {
             var scores = new Intent(Activity, typeof(ScoresActivity));
             scores.PutExtra("gameType", "Flappy");
-            Activity.StartActivity(scores);
+            
             Activity.Finish();
+            Activity.StartActivity(scores);
         }
 
         private void UpFab_Touch(object sender, View.TouchEventArgs e)
